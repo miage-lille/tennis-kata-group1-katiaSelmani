@@ -55,14 +55,14 @@ let given_deuce_when_player_one_wins () =
   Alcotest.(check score)
     "score is Advantage Player_one"
     (* to change when we will know how represent Advantage *)
-    (raise @@ Failure "How represent Advantage Value")
+    (Advantage Player_one)
     (score_when_deuce Player_one)
 
 
 let given_deuce_when_player_two_wins () =
   Alcotest.(check score)
     "score is Advantage Player_two"
-    (raise @@ Failure "How represent Advantage Value")
+    (Advantage Player_two)
     (score_when_deuce Player_two)
 
 
@@ -88,38 +88,50 @@ let given_player_one_at_40_when_player_one_wins () =
   Alcotest.(check score)
     "score is Game for Player_one"
     (Game Player_one)
-    (raise @@ Failure "How to code score_when_forty")
+    (score_when_game Player_one)
 
 
 let given_player_one_at_40_other_at_30_when_other_wins () =
+let forty_thirty = { player = Player_one; other_point = Thirty } in
+  let winner = forty_thirty.player in
   Alcotest.(check score)
     "score is Deuce"
     Deuce
-    (raise @@ Failure "How to code score_when_forty")
+    (score_when_forty forty_thirty winner)
 
 
 let given_player_one_at_40_other_at_15_when_other_wins () =
+  let forty_love = { player = Player_one; other_point = Love } in
+  let winner = other_player forty_love.player in
+
   Alcotest.(check score)
-    "score is 40 / 30"
-    Deuce
-    (raise @@ Failure "How to code score_when_forty")
+      "score is 40 / 30"
+     Deuce
+      (score_when_forty forty_love winner)
 
 
 let given_player_one_at_15_other_at_15_when_player_one_wins () =
+  let fifteen_fifteen = {player_one = Fifteen;player_two = Fifteen} in
+  let thirty_fifteen = {player_one = Thirty; player_two = Fifteen} 
   Alcotest.(check score)
     "score is 30 / 15"
-    (raise @@ Failure "You turn to code the expected result")
-    (raise @@ Failure "You turn to code the test")
+    score_when_point fifteen_fifteen player_one
+    (Points thirty_fifteen)
 
 
 let given_player_one_at_0_other_at_15_when_other_wins () =
+  let love_fifteen = {player_one = Love; player_two = Fifteen} in
+  let love_thirty = {player_one = Love; player_two = Thirty} in
   Alcotest.(check score)
     "score is 0 / 30"
-    (raise @@ Failure "You turn to code the expected result")
-    (raise @@ Failure "You turn to code the test")
+    score_when_point love_fifteen
+    (Points love_thirty)
 
 
 let given_player_one_at_30_other_at_15_when_player_one_wins () =
+ let thirty_fifteen = {player_one = Thirty ;player_two = Fifteen} in
+ let love_thirty = {player_one =  Love; player_two = Thirty} in
+
   Alcotest.(check score)
     "score is 40 / 15"
     (raise @@ Failure "You turn to code the expected result")
