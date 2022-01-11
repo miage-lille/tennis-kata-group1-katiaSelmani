@@ -100,14 +100,15 @@ let score_when_advantage : player -> player -> score =
                                 else Deuce
 
 
-let score_when_forty : forty_data -> player -> score =
- fun current_forty winner -> if current_forty.player = winner
+let score_when_forty current_forty winner =
+  if current_forty.player = winner
   then Game winner
   else
     match increment_point current_forty.other_point with
     | None -> Deuce
     | Some p -> Forty { player = current_forty.player; other_point = p }
 
+    
 let score_when_game : player -> score =
  fun winner -> Game winner
 
